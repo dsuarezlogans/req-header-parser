@@ -9,14 +9,14 @@ const whoami = (req, res) => {
 module.exports = whoami;
 
 const parser = (remoteAddress, userAgent, acceptLanguage) => {
-    const ipaddress = remoteAddress;
-    const lang = acceptLanguage.split(',')[0];
+    const ipaddress = remoteAddress.split(':')[2];
+    const language = acceptLanguage.split(',')[0];
     const regExp = /\(([^)]+)\)/;
     const software = userAgent.split(regExp)[1];
 
     return {
         ipaddress,
-        lang,
+        language,
         software
     };
 
