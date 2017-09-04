@@ -1,7 +1,7 @@
 const whoami = (req, res) => {
-    let data = parser(req.connection.remoteAddress,
-        req.headers['user-agent'],
-        req.headers['accept-language']);
+    let data = parser(req.header('x-forwarded-for'),
+        req.header('user-agent'),
+        req.header('accept-language'));
 
     res.status(200).jsonp(data);
 }
@@ -9,7 +9,7 @@ const whoami = (req, res) => {
 module.exports = whoami;
 
 const parser = (remoteAddress, userAgent, acceptLanguage) => {
-    const ipaddress = remoteAddress.split(':')[2];
+    const ipaddress = remoteAddress.split(',')[0];
     const language = acceptLanguage.split(',')[0];
     const regExp = /\(([^)]+)\)/;
     const software = userAgent.split(regExp)[1];
